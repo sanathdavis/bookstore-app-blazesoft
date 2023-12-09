@@ -10,6 +10,7 @@ const AddBookModal = ({ onClose }) => {
     name: "",
     price: "",
     category: "",
+    otherCategory: "", // New state for the "Other" category text box
     description: "",
   });
 
@@ -40,7 +41,10 @@ const AddBookModal = ({ onClose }) => {
         id: uuidv4(),
         name: bookInfo.name,
         price: bookInfo.price,
-        category: bookInfo.category,
+        category:
+          bookInfo.category === "Other"
+            ? bookInfo.otherCategory
+            : bookInfo.category,
         description: bookInfo.description,
       };
 
@@ -79,15 +83,34 @@ const AddBookModal = ({ onClose }) => {
           </div>
           <div className="form-group">
             <label htmlFor="category">Category:</label>
-            <input
-              type="text"
+            <select
               id="category"
               name="category"
               value={bookInfo.category}
               onChange={handleInputChange}
               required
-            />
+            >
+              <option value="Fiction">Fiction</option>
+              <option value="Non-fiction">Non-fiction</option>
+              <option value="Science Fiction">Science Fiction</option>
+              <option value="Mystery">Mystery</option>
+              <option value="Self-Help">Self-Help</option>
+              <option value="Other">Other</option>
+            </select>
           </div>
+          {bookInfo.category === "Other" && (
+            <div className="form-group">
+              <label htmlFor="otherCategory">Other Category:</label>
+              <input
+                type="text"
+                id="otherCategory"
+                name="otherCategory"
+                value={bookInfo.otherCategory}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+          )}
           <div className="form-group">
             <label htmlFor="description">Description:</label>
             <textarea
