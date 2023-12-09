@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+// Import necessary dependencies and components
+import React from 'react';
+import { Provider } from 'react-redux';
+import store from './store';
+import BookList from './components/BookList';
+import AddBookModal from './components/AddBookModal';
 
-function App() {
+// Main App component
+const App = () => {
+  // State to manage the visibility of the add book modal
+  const [isAddModalOpen, setIsAddModalOpen] = React.useState(false);
+
+  // Function to handle opening and closing the add book modal
+  const toggleAddModal = () => {
+    setIsAddModalOpen(!isAddModalOpen);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <div>
+
+        {/* BookList component to display the list of books */}
+        <BookList />
+
+        {/* AddBookModal component for adding a new book */}
+        {isAddModalOpen && (
+          <AddBookModal onClose={toggleAddModal} />
+        )}
+      </div>
+    </Provider>
   );
-}
+};
 
 export default App;
